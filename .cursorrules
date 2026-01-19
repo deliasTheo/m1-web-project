@@ -1,0 +1,57 @@
+# Règles de Documentation Automatique pour m1-web-project
+
+## Documentation dans README.md
+
+À CHAQUE demande de l'utilisateur, tu DOIS :
+
+1. **Ajouter une entrée dans "Historique des Modifications"** du README.md :
+   - Titre : "Demande : [description courte de la demande]"
+   - Date : [date actuelle]
+   - Section "Demande initiale" : Copier exactement ce que l'utilisateur a demandé
+   - Section "Modifications apportées" : Décrire en quelques lignes les modifications que tu as faites après avoir terminé
+
+2. **Mettre à jour "Fonctionnalités Ajoutées par Commit"** :
+   - Seulement lors des commits
+   - Lister UNIQUEMENT les nouvelles fonctionnalités ajoutées depuis le dernier commit
+   - Ne pas lister les corrections de bugs ou refactorings mineurs
+
+## Format de Documentation
+
+### Pour chaque demande dans "Historique des Modifications" :
+
+```markdown
+### Demande : [Titre descriptif]
+
+**Date :** [Date]
+
+**Demande initiale :**
+[Texte exact de la demande de l'utilisateur]
+
+**Modifications apportées :**
+1. [Description de la modification 1]
+2. [Description de la modification 2]
+...
+```
+
+### Pour les commits dans "Fonctionnalités Ajoutées par Commit" :
+
+```markdown
+### Commit [hash ou date] : [Titre du commit]
+
+- [Fonctionnalité 1]
+- [Fonctionnalité 2]
+...
+```
+
+## Règles Importantes
+
+- TOUJOURS documenter dans le README.md à la racine du projet
+- NE PAS documenter les corrections de bugs mineurs comme des fonctionnalités
+- ÊTRE précis sur ce qui a été modifié
+- GARDER la cohérence avec le style existant
+- NE PAS mentionner de fonctionnalités qui n'existent pas réellement
+
+## Langue
+
+- TOUT le README doit être en FRANÇAIS
+- Les commentaires dans le code peuvent être en anglais si c'est la convention du projet
