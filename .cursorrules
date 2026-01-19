@@ -3,14 +3,15 @@
 ## Documentation dans README.md
 
 À CHAQUE demande de l'utilisateur, tu DOIS :
+1. **Lire le README.md** afin d'avoir du contexte.
 
-1. **Ajouter une entrée dans "Historique des Modifications"** du README.md :
+2. **Ajouter une entrée dans "Historique des Modifications"** du README.md :
    - Titre : "Demande : [description courte de la demande]"
    - Date : [date actuelle]
    - Section "Demande initiale" : Copier exactement ce que l'utilisateur a demandé
    - Section "Modifications apportées" : Décrire en quelques lignes les modifications que tu as faites après avoir terminé
 
-2. **Mettre à jour "Fonctionnalités Ajoutées par Commit"** :
+3. **Mettre à jour "Fonctionnalités Ajoutées par Commit"** :
    - Seulement lors des commits
    - Lister UNIQUEMENT les nouvelles fonctionnalités ajoutées depuis le dernier commit
    - Ne pas lister les corrections de bugs ou refactorings mineurs
@@ -31,6 +32,9 @@
 1. [Description de la modification 1]
 2. [Description de la modification 2]
 ...
+
+**Commentaire apporté par moi-même :**
+NE RIEN METTRE ICI, C'EST L'UTILISATEUR QUI REMPLIRA
 ```
 
 ### Pour les commits dans "Fonctionnalités Ajoutées par Commit" :
@@ -51,6 +55,7 @@
 - GARDER la cohérence avec le style existant
 - NE PAS mentionner de fonctionnalités qui n'existent pas réellement
 - Ces regles peuvent etre transgresser si l'utilisateur demande de ne pas le faire, sinon elles sont obligatoires
+- Chaque nouveau prompt, même dans le même "chat" doit etre une nouvelle demande
 
 ## Langue
 
