@@ -1,0 +1,9 @@
+[submodule "m1-web-backend"]
+	path = m1-web-backend
+	url = https://github.com/deliasTheo/m1-web-backend.git
+[submodule "m1-web-sampler"]
+	path = m1-web-sampler
+	url = https://github.com/deliasTheo/m1-web-sampler.git
+[submodule "m1-web-frontend-angular"]
+	path = m1-web-frontend-angular
+	url = https://github.com/deliasTheo/m1-web-frontend-angular.git
