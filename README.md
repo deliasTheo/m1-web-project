@@ -85,15 +85,20 @@ Ce n'est pas le cas pour windows. Fait en sorte que ca marche aussi bien sur mac
 3. Ajout d'un support supplémentaire pour les caractères produits sur Mac AZERTY (&, é, ", ') afin d'assurer la compatibilité complète
 
 **Commentaire fait par moi-même**:
-L'IA a fait a peux près ce que je voulais, mais il a mal compris que je voulais que la touche 1 soit le pod 0 et non le pod 12. J'ai donc modifié ca. De plus, j'ai remarqué qu'elle a mis en place les KeyA/Z/E sauf que si je laisse comme ca, ca prends en compte le clavier qwerty et non azerty. Je vais donc modifié ca pour m'adapter au clavier AZERT.
+L'IA a fait à peux près ce que je voulais, mais il a mal compris que je voulais que la touche 1 soit le pod 0 et non le pod 12. J'ai donc modifié ca. De plus, j'ai remarqué qu'elle a mis en place les KeyA/Z/E sauf que si je laisse comme ca, ca prends en compte le clavier qwerty et non azerty. Je vais donc modifié ca pour m'adapter au clavier AZERT.
 
 ---
 
 ## Fonctionnalités Ajoutées par Commit
 
-### [À compléter lors du prochain commit]
+### Commit e2dd6c4 (19/01/2026) : Correction du mapping clavier AZERTY
 
-Cette section sera mise à jour automatiquement à chaque commit pour lister uniquement les nouvelles fonctionnalités ajoutées depuis le commit précédent.
+- Correction du mapping clavier AZERTY pour les pads du sampler
+- Utilisation de `event.key` au lieu de `event.code` pour les touches lettres afin de supporter correctement le layout AZERTY
+- Correction de l'ordre des pads : pad 0 correspond maintenant à la touche 1
+- Support maintenu pour les touches 1-4 via `event.code` (Digit1-4) et `event.key` pour Mac AZERTY (&, é, ", ')
+
+---
 
 ---
 
