@@ -46,10 +46,11 @@
 ## Règles Importantes
 
 - TOUJOURS documenter dans le README.md à la racine du projet
-- NE PAS documenter les corrections de bugs mineurs comme des fonctionnalités
+- TOUJOURS documenter dans le README.md les corrections de bugs mineurs, mais pas besoin de les mentionner dans la partie "Fonctionnalités Ajoutées par Commit", uniquement dans l'historique des modifications
 - ÊTRE précis sur ce qui a été modifié
 - GARDER la cohérence avec le style existant
 - NE PAS mentionner de fonctionnalités qui n'existent pas réellement
+- Ces regles peuvent etre transgresser si l'utilisateur demande de ne pas le faire, sinon elles sont obligatoires
 
 ## Langue
 
