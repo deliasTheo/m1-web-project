@@ -183,6 +183,14 @@ Pas vraiment de commentaire. Cursor a fait ce qu'il fallait, autant niveau archi
 - Correction de l'ordre des pads : pad 0 correspond maintenant à la touche 1
 - Support maintenu pour les touches 1-4 via `event.code` (Digit1-4) et `event.key` pour Mac AZERTY (&, é, ", ')
 
+### Commit 5a144ce (20/01/2026) : Frontend Angular – gestion des presets et sons
+
+- Ajout des modèles `Preset` et `Son` dans le frontend Angular
+- Création du service `PresetService` avec gestion réactive via `BehaviorSubject`/`Observable`
+- Mise en place du composant `HomePage` pour afficher, renommer et gérer les presets et leurs sons
+- Ajout d'un composant modal pour créer de nouveaux presets avec possibilité d'ajouter des sons
+- Ajout des fonctionnalités de suppression (presets et sons) avec confirmation utilisateur
+
 ---
 
 ---
