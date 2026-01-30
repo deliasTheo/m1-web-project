@@ -284,7 +284,36 @@ NE RIEN METTRE ICI, C'EST L'UTILISATEUR QUI REMPLIRA
 
 ---
 
+### Demande : Suppression d'un son ou d'un preset (backend + frontend Angular)
+
+**Date :** 30/01/2026
+
+**Demande initiale :**
+derniere ajout. il faut pouvoir supprimé un son ou un preset. Fait les modif nécéssaie pour que ca mette a jour le backend et le front end angular
+
+**Modifications apportées :**
+1. Backend (`m1-web-backend/server.js`) :
+   - Route `DELETE /api/sound/:soundName` : suppression d'un son (body : `presetName` requis pour identifier le son). Vérification de l'existence du preset et du son, puis suppression dans MongoDB.
+   - Route `DELETE /api/preset/:presetName` : suppression d'un preset et de tous ses sons (suppression des documents dans la collection `sound` liés au preset, puis suppression du preset).
+2. Frontend Angular (`PresetService`) :
+   - `deletePreset(presetIndex)` appelle désormais `DELETE /api/preset/:presetName` puis recharge la liste des presets.
+   - `deleteSonFromPreset(presetIndex, sonIndex)` appelle désormais `DELETE /api/sound/:soundName` avec `presetName` dans le body puis recharge la liste. L'interface (boutons suppression et boîtes de confirmation) était déjà en place ; seules les méthodes du service ont été branchées sur le backend.
+
+**Commentaire apporté par moi-même :**
+NE RIEN METTRE ICI, C'EST L'UTILISATEUR QUI REMPLIRA
+
+---
+
 ## Fonctionnalités Ajoutées par Commit
+
+### Commit 2a31700 (30/01/2026) : Backend – routes DELETE preset et DELETE sound
+
+- Route `DELETE /api/preset/:presetName` : suppression d'un preset et de tous ses sons (MongoDB)
+- Route `DELETE /api/sound/:soundName` : suppression d'un son (body : `presetName`)
+
+### Commit 9b22c8f (30/01/2026) : Frontend Angular – suppression preset/son via API
+
+- `deletePreset` et `deleteSonFromPreset` appellent les endpoints DELETE du backend puis rechargent la liste
 
 ### Commit 477af8d (30/01/2026) : Frontend Angular – connexion au backend (Render)
 
