@@ -174,6 +174,93 @@ Pas vraiment de commentaire. Cursor a fait ce qu'il fallait, autant niveau archi
 
 ---
 
+### Demande : Passage du backend sur MongoDB pour les presets
+
+**Date :** 28/01/2026
+
+**Demande initiale :**
+On va passer sur un nouveau systeme pour le backend. Je t'explique. Si on étais sur a projet a grand envergure, on ferais plutot un truc du style : Front -> API -> BDD -> recup les sons sur un S3. 
+La on est sur un projet etudiant, donc pas besoin d'un s3, mais ducoup, j'ai fait en sorte que ma bdd (mongodb) ai 2 objets. 
+Exemple d'un preset : 
+{
+  "_id": {
+    "$oid": "69771d631e4e76df4cc488c8"
+  },
+  "name": "808",
+  "type": "Drumkit",
+  "isFactoryPreset": true
+}
+
+Exemple d'un son : 
+{
+  "_id": {
+    "$oid": "69771ee51e4e76df4cc488ca"
+  },
+  "presetId": {
+    "$oid": "69771d631e4e76df4cc488c8"
+  },
+  "name": "kick",
+  "url": "/presets/808/Kick 808X.wav"
+}
+
+comme tu vois, en URL j'ai mis /presets/namePreset/nameSon.wav, le but c'est donc de recupere les meta donnée d'un preset et d'un son, et on ira chercher le son grace a l'url que j'ai mis dans mongo db. On peux donc supprimé les fichier json (808.json/electronic.json etc...)
+Le but est dont d'integré mongo db partout dans le fichier @m1-web-backend/server.js 
+
+Pour faire des requettes sur mongodb : mongodb+srv://root:<root>@m1-sampler.llqk3my.mongodb.net/?appName=M1-sampler
+
+**Modifications apportées :**
+1. Refactor complet de `m1-web-backend/server.js` pour supprimer le chargement des presets depuis les fichiers JSON locaux et utiliser MongoDB comme source unique des métadonnées (collections `presets` et `sounds`)
+2. Ajout de la connexion MongoDB (avec URI configurable via `MONGO_URI`) et initialisation des collections, avec démarrage du serveur uniquement après connexion réussie à la base
+3. Réécriture des routes `/api/presets` et `/api/presets/:name` pour qu'elles récupèrent les presets et leurs sons via un agrégat MongoDB (`$lookup`), en conservant la forme de réponse attendue par le sampler (`name`, `type`, `isFactoryPresets`, `samples: [{ name, url }]`)
+4. Conservation du service des fichiers audio statiques depuis le dossier `m1-web-backend/presets` (seuls les fichiers `.json` de définition de presets sont désormais supprimés)
+
+**Commentaire apporté par moi-même :**
+Ici, j'ai juste eu a modifié les info de la BDD qui étais fausse. Exemple : nom de la base : audio_sampler, collection : preset et non presets etc... Sinon cursor m'a fait ce que j'ai demandé, avec l'architecture que je voulais.
+
+---
+
+### Demande : Ajout des routes pour modifier les métadonnées et créer des presets
+
+**Date :** 28/01/2026
+
+**Demande initiale :**
+Il faudrais maintenant pouvoir modifié les méta donnée d'un son ou d'un preset. L'ajout d'un preset doit aussi etre possible. Tout ca en passant par mongoDB. utilise les path : 
+/api/preset/:presetName/modifyName
+/api/preset/addPreset (avec le json du preset dans le body)
+POur le son : 
+/api/sound/:soundName/modifyName
+
+D'aullleur je viens de voir un probleme. Imaginon on ajoute un preset avec le même nom, ca pose probleme. Il faut donc gérer le fait qu'il est impossible d'ajouter un preset/son avec le même nom qu'un autre. Je sais que normalement on gere ca avec l'ID. Mais je n'ai pas envie que le front s'embette avec l'ID et gere uniquement le nom. C'est d'ailleur pour ca qu'on renvoie pas l'id dans les GET. 
+Attention, ne pas oublier qu'il doit etre impossible de modifier le nom d'un preset/son, si ce nom existe deja (comme pour l'ajout).
+
+Pour l'ajout d'un son, on verra après comment on fait pour stocker le son en question. Pour l'instant on fait uniquement addPreset, modifyNamePreset et modifyNameSound.
+
+**Modifications apportées :**
+1. Ajout de la route `POST /api/preset/addPreset` pour créer un nouveau preset :
+   - Validation des champs requis (`name`, `type`)
+   - Vérification de l'unicité du nom avant insertion (retourne 409 si le nom existe déjà)
+   - Support du champ optionnel `isFactoryPreset` (défaut: `false`)
+   - Retourne 201 avec les métadonnées du preset créé
+2. Ajout de la route `PUT /api/preset/:presetName/modifyName` pour modifier le nom d'un preset :
+   - Vérification de l'existence du preset (404 si non trouvé)
+   - Vérification de l'unicité du nouveau nom (409 si le nom existe déjà, sauf si c'est le même nom)
+   - Mise à jour du nom dans MongoDB
+3. Ajout de la route `PUT /api/sound/:soundName/modifyName` pour modifier le nom d'un son :
+   - Requiert `presetName` dans le body pour identifier le son (unicité par preset)
+   - Vérification de l'existence du preset et du son dans ce preset (404 si non trouvé)
+   - Vérification de l'unicité du nouveau nom dans le même preset (409 si le nom existe déjà dans ce preset)
+   - Mise à jour du nom dans MongoDB
+4. Gestion des erreurs HTTP appropriées :
+   - 400 pour les données invalides ou manquantes
+   - 404 pour les ressources non trouvées
+   - 409 pour les conflits d'unicité (nom déjà utilisé)
+   - 500 pour les erreurs serveur
+
+**Commentaire apporté par moi-même :**
+C'est pas mal ce qu'il m'a. Seul soucis, il propose de donnée un presetId pour le `PUT /api/sound/:soundName/modifyName`, alors que on a dit que le front ne connaissais que les noms. Mais c'est OK vu que on fait l'unicité sur les sons. Donc je vais modifié ca (enfin lui demander de le modifier). [Modifié : utilisation de presetName au lieu de presetId]
+
+---
+
 ## Fonctionnalités Ajoutées par Commit
 
 ### Commit e2dd6c4 (19/01/2026) : Correction du mapping clavier AZERTY
