@@ -286,13 +286,13 @@ NE RIEN METTRE ICI, C'EST L'UTILISATEUR QUI REMPLIRA
 
 ## Fonctionnalités Ajoutées par Commit
 
-### Commit 477af8d (28/01/2026) : Frontend Angular – connexion au backend (Render)
+### Commit 477af8d (30/01/2026) : Frontend Angular – connexion au backend (Render)
 
 - Config API (`api.config.ts`) et `provideHttpClient(withFetch())` pour les appels HTTP
 - PresetService branché sur le backend : GET /api/presets, PUT modifyName preset/son, POST addPreset
 - NgZone pour mise à jour de la vue après réponses HTTP (correction affichage liste au chargement)
 
-### Commit a88a737 (28/01/2026) : Backend MongoDB – presets/sons, routes addPreset et modifyName
+### Commit a88a737 (30/01/2026) : Backend MongoDB – presets/sons, routes addPreset et modifyName
 
 - Passage du backend sur MongoDB : presets et sons chargés depuis les collections `preset` et `sound`
 - Suppression des fichiers JSON de définition des presets (808, basic-kit, electronic, hip-hop, steveland-vinyl)
