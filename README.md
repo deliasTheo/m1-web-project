@@ -42,11 +42,33 @@ Voici les fonctionnalités prévues pour améliorer le projet :
 
 ## Structure du Projet
 
-Le projet est composé de trois parties principales :
+Le projet est composé de trois parties (chacune en sous-module Git) :
 
-- **m1-web-backend/** - Serveur REST Node.js/Express pour servir les presets et fichiers audio
-- **m1-web-sampler/** - Application web de sampler audio avec interface utilisateur
-- **m1-web-frontend-angular/** - Application front-end Angular (en développement)
+- **m1-web-backend/** — Serveur REST Node.js/Express : API des presets/sons (MongoDB) et service des fichiers audio
+- **m1-web-sampler/** — Application web de sampler audio : chargement des presets, pads, enregistrement local
+- **m1-web-frontend-angular/** — Application Angular de gestion des presets : liste, renommage, ajout/suppression (via l’API)
+
+## Lancer les projets front (local)
+
+Les deux interfaces utilisateur se lancent en local comme suit :
+
+1. **Backend** : à lancer en premier (voir [m1-web-backend/README.md](m1-web-backend/README.md)) — `npm install` puis `npm start` dans `m1-web-backend/` (port 3000).
+2. **Frontend Angular** (gestion des presets) : voir [m1-web-frontend-angular/README.md](m1-web-frontend-angular/README.md) — `ng serve` dans `m1-web-frontend-angular/` (http://localhost:4200).
+3. **Sampler** (lecture des samples, enregistrement) : voir [m1-web-sampler/README.md](m1-web-sampler/README.md) — `npm start` dans `m1-web-sampler/` (http://localhost:8000).
+
+Il faut lancer le backend puis, selon l’usage, l’app Angular et/ou le sampler.
+
+## Ce qui a été fait / Ce qui n’est pas fait
+
+**Fait :**
+
+- Backend sur MongoDB : presets et sons en base, API GET/POST/PUT/DELETE pour presets et sons (sauf ajout de son).
+- Frontend Angular : liste des presets, déroulement des sons, renommage preset/son, suppression preset/son, création de preset (nom + type). Tout est branché sur le backend (sauf l’ajout de son).
+- Sampler : chargement des presets depuis l’API, lecture des samples sur les pads, waveform et trim bars, enregistrement de sons au micro (rejouables uniquement en local pendant la session), raccourcis clavier AZERTY.
+
+**Pas fait :**
+
+- **addSound** : aucun endpoint backend pour « ajouter un son à un preset ». Dans le sampler, on peut enregistrer des sons et les rejouer en local, mais ils ne sont pas persistés dans les presets côté backend. Dans Angular, l’interface « + Ajouter un son » (nom + URL) met à jour la liste en mémoire uniquement, pas en base.
 
 ---
 
@@ -357,7 +379,7 @@ Ce projet utilise l'IA (via Cursor) pour le développement. Chaque interaction e
 
 ### État Actuel du Projet
 
-- ✅ Backend fonctionnel avec serveur REST pour les presets
-- ✅ Sampler web fonctionnel avec interface utilisateur
-- 🚧 Frontend Angular en cours de développement
-- 📋 Fonctionnalités à venir listées dans l'introduction
+- ✅ Backend fonctionnel (MongoDB, API presets/sons, fichiers audio)
+- ✅ Sampler web fonctionnel (presets, pads, enregistrement local, AZERTY)
+- ✅ Frontend Angular fonctionnel (liste, renommage, suppression, ajout de preset ; addSound non branché backend)
+- 📋 Fonctionnalités à venir listées dans l’introduction ; addSound (ajout de son à un preset côté API) non réalisé
