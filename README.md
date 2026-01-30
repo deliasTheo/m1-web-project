@@ -261,6 +261,29 @@ C'est pas mal ce qu'il m'a. Seul soucis, il propose de donnée un presetId pour 
 
 ---
 
+### Demande : Connecter le frontend Angular au backend (Render)
+
+**Date :** 28/01/2026
+
+**Demande initiale :**
+Fait en sorte que le angular utilise le backend maintenant. ON a créer un service exprès. Fait en sorte d'appeler le backend via render bien sur. Tu connais maintenant toutes les endpoints. ON se charge de add sound après
+
+**Modifications apportées :**
+1. Création de `m1-web-frontend-angular/src/app/config/api.config.ts` : URL de base de l’API (par défaut : URL Render ; modifiable pour dev local).
+2. Ajout de `provideHttpClient(withFetch())` dans `app.config.ts` pour les appels HTTP.
+3. Réécriture du `PresetService` pour utiliser le backend :
+   - Chargement des presets au démarrage via `GET /api/presets`, avec mapping API (name/samples) vers le modèle front (nom/sons).
+   - `updatePresetName` : `PUT /api/preset/:presetName/modifyName` puis rechargement de la liste.
+   - `updateSonName` : `PUT /api/sound/:soundName/modifyName` (body : newName, presetName) puis rechargement.
+   - `addPreset` : `POST /api/preset/addPreset` (name, type, isFactoryPreset) puis rechargement (sons non envoyés, add sound à venir).
+   - `deletePreset`, `deleteSonFromPreset`, `addSonToPreset` : restent en local uniquement (pas d’endpoints backend pour l’instant).
+4. Gestion des erreurs : `catchError` + log en console ; la liste est rechargée après chaque mutation réussie.
+
+**Commentaire apporté par moi-même :**
+NE RIEN METTRE ICI, C'EST L'UTILISATEUR QUI REMPLIRA
+
+---
+
 ## Fonctionnalités Ajoutées par Commit
 
 ### Commit a88a737 (28/01/2026) : Backend MongoDB – presets/sons, routes addPreset et modifyName
