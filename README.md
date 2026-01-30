@@ -263,6 +263,15 @@ C'est pas mal ce qu'il m'a. Seul soucis, il propose de donnée un presetId pour 
 
 ## Fonctionnalités Ajoutées par Commit
 
+### Commit a88a737 (28/01/2026) : Backend MongoDB – presets/sons, routes addPreset et modifyName
+
+- Passage du backend sur MongoDB : presets et sons chargés depuis les collections `preset` et `sound`
+- Suppression des fichiers JSON de définition des presets (808, basic-kit, electronic, hip-hop, steveland-vinyl)
+- Route `POST /api/preset/addPreset` pour créer un nouveau preset (avec unicité du nom)
+- Route `PUT /api/preset/:presetName/modifyName` pour modifier le nom d’un preset (unicité du nouveau nom)
+- Route `PUT /api/sound/:soundName/modifyName` pour modifier le nom d’un son (body : `newName`, `presetName` ; unicité par preset)
+- Gestion des conflits d’unicité (409) et des erreurs 400/404
+
 ### Commit e2dd6c4 (19/01/2026) : Correction du mapping clavier AZERTY
 
 - Correction du mapping clavier AZERTY pour les pads du sampler
